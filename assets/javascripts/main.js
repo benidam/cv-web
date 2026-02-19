@@ -144,3 +144,19 @@ if(resumeButton) {
 if(downloadButton) {
     downloadButton.addEventListener("click", handlePdfGeneration);
 }
+// Generate PDF with html2pdf.js
+function generateResume() {
+    let opt = {
+        margin: 0,
+        filename: document.body.classList.contains(darkTheme) ? 'CV_Alvaro_Benitez_Dark.pdf' : 'CV_Alvaro_Benitez_Light.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { 
+            scale: 4, 
+            useCORS: true,
+            windowWidth: 1200 // <--- ¡ESTA ES LA MAGIA! Fuerza la vista de ordenador en el móvil
+        }, 
+        jsPDF: { format: 'a4', orientation: 'portrait' }
+    };
+    
+    html2pdf(areaCV, opt);
+}
