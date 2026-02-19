@@ -1,5 +1,30 @@
 <!DOCTYPE html>
 <html lang="es">
+    <style>
+            /* Esto solo se activa cuando le das al botón de descargar PDF */
+            body.scale-cv .section {
+                padding: 0.5rem 0 !important; /* Reduce el hueco entre secciones */
+            }
+            body.scale-cv .section-title {
+                margin-bottom: 0.5rem !important; /* Reduce el hueco debajo de los títulos */
+            }
+            body.scale-cv .experience_content, 
+            body.scale-cv .education_content {
+                padding-bottom: 0.5rem !important; /* Junta más tus trabajos entre sí */
+            }
+            body.scale-cv .profile_description,
+            body.scale-cv .experience_description {
+                font-size: 0.80rem !important; /* Hace la letra de las descripciones un pelín más pequeña */
+                line-height: 1.3 !important; /* Junta un poco las líneas de texto */
+            }
+            body.scale-cv .home_container {
+                gap: 1rem !important; /* Junta un poco más tu foto y tu nombre */
+            }
+            body.scale-cv .home_title {
+                font-size: 1.8rem !important; /* Reduce mínimamente tu nombre */
+            }
+        </style>
+    
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -344,4 +369,5 @@
         <script src="assets/javascripts/html2pdf.v0.9.3.bundle.min.js"></script>
         <script src="assets/javascripts/main.js"></script>
     </body>
+
 </html>
