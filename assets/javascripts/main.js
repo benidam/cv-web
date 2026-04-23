@@ -146,38 +146,9 @@ let areaCV = document.getElementById('area-cv');
 // Button
 let resumeButton = document.getElementById("resume-button");
 
-// Generate PDF with html2pdf.js
-function generateResume() {
-    // PDF filename change depending of the light/dark mode
-    const isDark = document.body.classList.contains(darkTheme);
-    const filename = isDark ? 'myResumeCV-dark.pdf' : 'myResumeCV-light.pdf';
+// Generate PDF using the browser's native print (window.print)
+// Resultado fiel al 100% con la web: colores, fuentes e iconos perfectos
 
-    // html2pdf.js options
-    let opt = {
-        margin: 0,
-        filename: filename,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: {
-            scale: 4,
-            useCORS: true,
-            scrollY: -window.scrollY,   // FIX: captura desde el top aunque hayas hecho scroll
-            logging: false
-        },
-        jsPDF: { format: 'a4', orientation: 'portrait' }
-    };
-
-    // FIX: API encadenable con promesas (v0.9+)
-    // removeScaleCV() se ejecuta DESPUÉS de que el PDF se genere,
-    // evitando el race condition del antiguo setTimeout(removeScaleCV, 1000)
-    html2pdf().set(opt).from(areaCV).save().then(() => {
-        removeScaleCV();
-    });
-}
-
-// Action executed by clicking on the button => generation of the final PDF CV
 resumeButton.addEventListener("click", () => {
-    // Adapt the area of the PDF
-    addScaleCV();
-    // Generate the PDF (removeScaleCV se llama al terminar, no con setTimeout)
-    generateResume();
+    window.print();
 });
