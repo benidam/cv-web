@@ -146,13 +146,13 @@ let areaCV = document.getElementById('area-cv');
 // Button
 let resumeButton = document.getElementById("resume-button");
 
-// Al pulsar el boton: escala el CV a A4 y abre el dialogo de impresion
+// Descarga directamente el PDF ya generado (dark o light segun el tema activo)
 resumeButton.addEventListener("click", () => {
-    addScaleCV();
-    window.print();
-});
-
-// Al cerrar el dialogo de impresion, quita el escalado
-window.addEventListener('afterprint', () => {
-    removeScaleCV();
+    const isDark = document.body.classList.contains(darkTheme);
+    const link = document.createElement('a');
+    link.href = isDark ? 'assets/pdf/myResumeCV-dark.pdf' : 'assets/pdf/myResumeCV-light.pdf';
+    link.download = isDark ? 'myResumeCV-dark.pdf' : 'myResumeCV-light.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 });
