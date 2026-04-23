@@ -146,9 +146,13 @@ let areaCV = document.getElementById('area-cv');
 // Button
 let resumeButton = document.getElementById("resume-button");
 
-// Generate PDF using the browser's native print (window.print)
-// Resultado fiel al 100% con la web: colores, fuentes e iconos perfectos
-
+// Al pulsar el boton: escala el CV a A4 y abre el dialogo de impresion
 resumeButton.addEventListener("click", () => {
+    addScaleCV();
     window.print();
+});
+
+// Al cerrar el dialogo de impresion, quita el escalado
+window.addEventListener('afterprint', () => {
+    removeScaleCV();
 });
