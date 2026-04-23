@@ -106,13 +106,8 @@ body.scale-cv {
 /* PDF A4 */
 
 .scale-cv .change-theme,
-.scale-cv .generate-pdf,
-.scale-cv .l-header {
-    display: none !important;
-}
-
-.scale-cv {
-    background-color: var(--body-color);
+.scale-cv .generate-pdf {
+    display: none;
 }
 
 .scale-cv .bd-container {
