@@ -106,8 +106,13 @@ body.scale-cv {
 /* PDF A4 */
 
 .scale-cv .change-theme,
-.scale-cv .generate-pdf {
-    display: none;
+.scale-cv .generate-pdf,
+.scale-cv .l-header {
+    display: none !important;
+}
+
+.scale-cv {
+    background-color: var(--body-color);
 }
 
 .scale-cv .bd-container {
@@ -742,25 +747,5 @@ img {
         grid-template-columns: repeat(4, max-content);
         column-gap: 3.5rem;
         padding-left: 2rem;
-    }
-    /* ==================== AJUSTES EXPORTACIÓN PDF ==================== */
-    /* Oculta elementos de la UI cuando se está generando el PDF con html2pdf */
-    body.exporting-pdf .nav {
-        display: none !important;
-    }
-    
-    body.exporting-pdf .change-theme {
-        display: none !important;
-    }
-    
-    body.exporting-pdf .generate-pdf {
-        display: none !important;
-    }
-    
-    /* PDF A4 */
-    
-    .scale-cv .change-theme,
-    .scale-cv .generate-pdf {
-        display: none;
     }
 }
