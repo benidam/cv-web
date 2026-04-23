@@ -757,8 +757,10 @@ img {
         display: none !important;
     }
     
-    /* Opcional: Asegurar que el fondo del área del CV sea el color del tema actual y cubra todo */
-    body.exporting-pdf #area-cv {
-        background-color: var(--container-color);
+    /* PDF A4 */
+    
+    .scale-cv .change-theme,
+    .scale-cv .generate-pdf {
+        display: none;
     }
 }
