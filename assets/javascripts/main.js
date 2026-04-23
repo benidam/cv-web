@@ -1,4 +1,24 @@
+/* Set picture in url base 64 */
+
+const img = document.getElementById('home-img');
+
+/*fetch('assets/pictures/profile.txt', {
+    mode: 'no-cors',
+    headers: {
+        'Access-Control-Allow-Origin':'*'
+    }
+})
+.then((response) => response.text())
+.then((result) => {
+    console.log('Success:', result);
+    //img.src = result;
+})
+.catch((error) => {
+    console.error('Error:', error);
+});*/
+
 /* Show Menu */
+
 const showMenu = (toggleId, navId) => {
     const toggle = document.getElementById(toggleId);
     nav = document.getElementById(navId);
@@ -11,9 +31,11 @@ const showMenu = (toggleId, navId) => {
         });
     }
 }
+
 showMenu('nav-toggle', 'nav-menu');
 
 /* Remove menu mobile */
+
 const navLink = document.querySelectorAll('.nav_link');
 
 function linkAction() {
@@ -21,9 +43,11 @@ function linkAction() {
     // When we click on each nav__link, we remove the show-menu class
     navMenu.classList.remove('show-menu');
 }
+
 navLink.forEach(n => n.addEventListener('click', linkAction));
 
 /* Scroll sections active link */
+
 const sections = document.querySelectorAll('section[id]');
 
 function scrollActive() {
@@ -41,9 +65,11 @@ function scrollActive() {
         }
     });
 }
+
 window.addEventListener('scroll', scrollActive);
 
 /* Show scroll top */
+
 function scrollTop() {
     const scrollTop = document.getElementById('scroll-top');
     if (this.scrollY >= 200) {
@@ -52,9 +78,11 @@ function scrollTop() {
         scrollTop.classList.remove('show-scroll');
     }
 }
+
 window.addEventListener('scroll', scrollTop);
 
 /* Light/Dark mode */
+
 const themeButton = document.getElementById('theme-button');
 let darkTheme = 'dark-theme';
 let darkMode = localStorage.getItem("dark-mode");
@@ -86,118 +114,70 @@ themeButton.addEventListener("click", () => {
     }
 });
 
+/* Link PDF Download on Mobile screen depending of the light/dark mode */
 
-/* ==================== GENERATE PDF ==================== */
+const downloadButton = document.getElementById('download-button');
+
+downloadButton.addEventListener('click', () => {
+    if (document.body.classList.contains(darkTheme)) {
+        downloadButton.href = "assets/pdf/myResumeCV-dark.pdf";
+    } else {
+        downloadButton.href = "assets/pdf/myResumeCV-light.pdf";
+    }
+});
 
 /* Reduce the size and print on an A4 sheet */
+
 function addScaleCV() {
     document.body.classList.add("scale-cv");
 }
 
-/* Remove the size when the CV is downloaded */
+/* Remote the size when the CV is downloaded */
+
 function removeScaleCV() {
     document.body.classList.remove("scale-cv");
 }
 
-// PDF generated area
-let areaCV = document.getElementById('area-cv');
-// Button PC
-let resumeButton = document.getElementById("resume-button");
-// Button Mobile
-let downloadButton = document.getElementById("download-button");
-
-// Generate PDF with html2pdf.js
-function generateResume() {
-    // Configuración para el PDF
-    let opt = {
-        margin: 0,
-        // Cambia el nombre del archivo dependiendo de si está en modo oscuro o claro
-        filename: document.body.classList.contains(darkTheme) ? 'CV_Alvaro_Benitez_Dark.pdf' : 'CV_Alvaro_Benitez_Light.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 4, useCORS: true }, // scale: 4 aumenta la calidad. useCORS permite descargar la foto.
-        jsPDF: { format: 'a4', orientation: 'portrait' }
-    };
-    
-    html2pdf(areaCV, opt);
-}
-
-// Función maestra que adapta el CV, genera el PDF y restaura el tamaño
-function handlePdfGeneration(e) {
-    if(e) e.preventDefault(); // Evita que la pantalla salte hacia arriba al pulsar el enlace en el móvil
-    
-    // 1. Adapt the area of the PDF
-    addScaleCV();
-    
-    // 2. Generate the PDF
-    generateResume();
-    
-    // 3. Remove adaptation after 5 seconds (asegura que dé tiempo a descargar la imagen con buena calidad sin cortar el diseño)
-    setTimeout(removeScaleCV, 5000);
-}
-
-// Escuchador de eventos para el botón del Ordenador
-if(resumeButton) {
-    resumeButton.addEventListener("click", handlePdfGeneration);
-}
-
-// Escuchador de eventos para el botón del Móvil
-if(downloadButton) {
-    downloadButton.addEventListener("click", handlePdfGeneration);
-}
-/* ==================== GENERATE PDF ==================== */
-
-/* Reduce the size and print on an A4 sheet */
-function addScaleCV() {
-    document.body.classList.add("scale-cv");
-}
-
-/* Remove the size when the CV is downloaded */
-function removeScaleCV() {
-    document.body.classList.remove("scale-cv");
-}
+/* Generate PDF */
 
 // PDF generated area
 let areaCV = document.getElementById('area-cv');
-// Button PC
+
+// Button
 let resumeButton = document.getElementById("resume-button");
-// Button Mobile
-let downloadButton = document.getElementById("download-button");
 
 // Generate PDF with html2pdf.js
 function generateResume() {
-    // Configuración para el PDF
-    let opt = {
-        margin: 0,
-        // Cambia el nombre del archivo dependiendo de si está en modo oscuro o claro
-        filename: document.body.classList.contains(darkTheme) ? 'CV_Alvaro_Benitez_Dark.pdf' : 'CV_Alvaro_Benitez_Light.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 4, useCORS: true }, 
-        jsPDF: { format: 'a4', orientation: 'portrait' }
-    };
-    
-    html2pdf(areaCV, opt);
+    // PDF filename change depending of the light/dark mode
+    if (document.body.classList.contains(darkTheme)) {
+        // html2pdf.js options
+        let opt = {
+            margin: 0,
+            filename: 'myResumeCV-dark.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 4, useCORS: true },
+            jsPDF: { format: 'a4', orientation: 'portrait' }
+        };
+        html2pdf(areaCV, opt);
+    } else {
+        // html2pdf.js options
+        let opt = {
+            margin: 0,
+            filename: 'myResumeCV-light.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 4, useCORS: true },
+            jsPDF: { format: 'a4', orientation: 'portrait' }
+        };
+        html2pdf(areaCV, opt);
+    }
 }
 
-// Función maestra que adapta el CV, genera el PDF y restaura el tamaño
-function handlePdfGeneration(e) {
-    if(e) e.preventDefault(); 
-    
-    // 1. Adapt the area of the PDF
+// Action executed by clicking on the button => generation of the final PDF CV CV
+resumeButton.addEventListener("click", () => {
+    // Adapt the area of the PDF
     addScaleCV();
-    
-    // 2. Generate the PDF
+    // Generate the PDF
     generateResume();
-    
-    // 3. Remove adaptation after 5 seconds
-    setTimeout(removeScaleCV, 5000);
-}
-
-// Escuchador de eventos para el botón del Ordenador
-if(resumeButton) {
-    resumeButton.addEventListener("click", handlePdfGeneration);
-}
-
-// Escuchador de eventos para el botón del Móvil
-if(downloadButton) {
-    downloadButton.addEventListener("click", handlePdfGeneration);
-}
+    // Remove adaptation after 1 second (you can choose to set more than 1 second if your PDF download time is long)
+    setTimeout(removeScaleCV, 1000);
+});
