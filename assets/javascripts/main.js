@@ -2,31 +2,13 @@
 
 const img = document.getElementById('home-img');
 
-/*fetch('assets/pictures/profile.txt', {
-    mode: 'no-cors',
-    headers: {
-        'Access-Control-Allow-Origin':'*'
-    }
-})
-.then((response) => response.text())
-.then((result) => {
-    console.log('Success:', result);
-    //img.src = result;
-})
-.catch((error) => {
-    console.error('Error:', error);
-});*/
-
 /* Show Menu */
 
 const showMenu = (toggleId, navId) => {
     const toggle = document.getElementById(toggleId);
     nav = document.getElementById(navId);
-
-    // Validate that variables exist
     if (toggle && nav) {
         toggle.addEventListener('click', () => {
-            // We add the show-menu class to the div tag with the nav__menu class
             nav.classList.toggle('show-menu');
         });
     }
@@ -40,7 +22,6 @@ const navLink = document.querySelectorAll('.nav_link');
 
 function linkAction() {
     const navMenu = document.getElementById('nav-menu');
-    // When we click on each nav__link, we remove the show-menu class
     navMenu.classList.remove('show-menu');
 }
 
@@ -52,12 +33,10 @@ const sections = document.querySelectorAll('section[id]');
 
 function scrollActive() {
     const scrollY = window.pageYOffset;
-
     sections.forEach(current => {
         const sectionHeight = current.offsetHeight;
         const sectionTop = current.offsetTop - 50;
         sectionId = current.getAttribute('id');
-
         if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
             document.querySelector('.nav_menu a[href*=' + sectionId + ']').classList.add('active-link');
         } else {
@@ -114,7 +93,7 @@ themeButton.addEventListener("click", () => {
     }
 });
 
-/* Link PDF Download on Mobile screen depending of the light/dark mode */
+/* Download button (mobile) */
 
 const downloadButton = document.getElementById('download-button');
 
@@ -126,33 +105,14 @@ downloadButton.addEventListener('click', () => {
     }
 });
 
-/* Reduce the size and print on an A4 sheet */
+/* Download button (desktop) - descarga el PDF ya generado directamente */
 
-function addScaleCV() {
-    document.body.classList.add("scale-cv");
-}
+const resumeButton = document.getElementById("resume-button");
 
-/* Remote the size when the CV is downloaded */
-
-function removeScaleCV() {
-    document.body.classList.remove("scale-cv");
-}
-
-/* Generate PDF */
-
-// PDF generated area
-let areaCV = document.getElementById('area-cv');
-
-// Button
-let resumeButton = document.getElementById("resume-button");
-
-// Descarga directamente el PDF ya generado (dark o light segun el tema activo)
 resumeButton.addEventListener("click", () => {
-    const isDark = document.body.classList.contains(darkTheme);
-    const link = document.createElement('a');
-    link.href = isDark ? 'assets/pdf/myResumeCV-dark.pdf' : 'assets/pdf/myResumeCV-light.pdf';
-    link.download = isDark ? 'myResumeCV-dark.pdf' : 'myResumeCV-light.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    if (document.body.classList.contains(darkTheme)) {
+        window.location.href = "assets/pdf/myResumeCV-dark.pdf";
+    } else {
+        window.location.href = "assets/pdf/myResumeCV-light.pdf";
+    }
 });
