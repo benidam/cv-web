@@ -744,3 +744,70 @@ img {
         padding-left: 2rem;
     }
 }
+
+/* ===================== PRINT / PDF ===================== */
+@media print {
+    /* Forzar que los colores de fondo se impriman */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* Tamaño y márgenes de página A4 */
+    @page {
+        size: A4 portrait;
+        margin: 0;
+    }
+
+    /* Ocultar todo lo que no es el CV */
+    .l-header,
+    .scrolltop,
+    .change-theme,
+    .generate-pdf,
+    .home_button-movil,
+    .nav {
+        display: none !important;
+    }
+
+    /* Resetear body */
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* El contenedor ocupa el ancho completo del A4 */
+    .bd-container {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* El resume llena la página entera */
+    .resume {
+        display: grid !important;
+        grid-template-columns: .5fr 1fr !important;
+        width: 100% !important;
+        min-height: 100vh !important;
+        box-shadow: none !important;
+    }
+
+    /* Columna izquierda con su color de fondo */
+    .resume_left {
+        background-color: var(--container-color-alt) !important;
+        padding: 1.5rem !important;
+    }
+
+    /* Columna derecha */
+    .resume_right {
+        background-color: var(--container-color) !important;
+        padding: 1.5rem !important;
+    }
+
+    /* Evitar que los elementos se corten entre páginas */
+    .education_content,
+    .experience_content,
+    .certificate_container {
+        break-inside: avoid;
+    }
+}
