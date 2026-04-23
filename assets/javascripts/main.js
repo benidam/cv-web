@@ -144,41 +144,60 @@ if(resumeButton) {
 if(downloadButton) {
     downloadButton.addEventListener("click", handlePdfGeneration);
 }
-/*==================== GENERATE PDF ====================*/
+/* ==================== GENERATE PDF ==================== */
+
+/* Reduce the size and print on an A4 sheet */
+function addScaleCV() {
+    document.body.classList.add("scale-cv");
+}
+
+/* Remove the size when the CV is downloaded */
+function removeScaleCV() {
+    document.body.classList.remove("scale-cv");
+}
+
 // PDF generated area
-let areaCv = document.getElementById('area-cv')
+let areaCV = document.getElementById('area-cv');
+// Button PC
+let resumeButton = document.getElementById("resume-button");
+// Button Mobile
+let downloadButton = document.getElementById("download-button");
 
-let resumeButton = document.getElementById('resume-button')
-
-// Html2pdf options
-let opt = {
-  margin:       0,
-  filename:     'CV_Alvaro_Benitez.pdf',
-  image:        { type: 'jpeg', quality: 0.98 },
-  html2canvas:  { scale: 4 },
-  jsPDF:        { format: 'a4', orientation: 'portrait' }
-}
-
-// Function to call areaCv and Html2Pdf options 
+// Generate PDF with html2pdf.js
 function generateResume() {
-    // 1. Añadimos una clase al body para ocultar cosas específicas durante la exportación
-    document.body.classList.add('exporting-pdf');
-
-    // 2. Generamos el PDF
-    html2pdf().set(opt).from(areaCv).save().then(() => {
-        // 3. Cuando termina de guardarse, quitamos la clase para que todo vuelva a la normalidad
-        document.body.classList.remove('exporting-pdf');
-    });
+    // Configuración para el PDF
+    let opt = {
+        margin: 0,
+        // Cambia el nombre del archivo dependiendo de si está en modo oscuro o claro
+        filename: document.body.classList.contains(darkTheme) ? 'CV_Alvaro_Benitez_Dark.pdf' : 'CV_Alvaro_Benitez_Light.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 4, useCORS: true }, 
+        jsPDF: { format: 'a4', orientation: 'portrait' }
+    };
+    
+    html2pdf(areaCV, opt);
 }
 
-// When the button is clicked, it executes the three functions
-resumeButton.addEventListener('click', () => {
-    // 1. The class .scale-cv is added to the body, where it reduces the size of the elements
-    scaleCv()
+// Función maestra que adapta el CV, genera el PDF y restaura el tamaño
+function handlePdfGeneration(e) {
+    if(e) e.preventDefault(); 
+    
+    // 1. Adapt the area of the PDF
+    addScaleCV();
+    
+    // 2. Generate the PDF
+    generateResume();
+    
+    // 3. Remove adaptation after 5 seconds
+    setTimeout(removeScaleCV, 5000);
+}
 
-    // 2. The PDF is generated
-    generateResume()
+// Escuchador de eventos para el botón del Ordenador
+if(resumeButton) {
+    resumeButton.addEventListener("click", handlePdfGeneration);
+}
 
-    // 3. The .scale-cv class is removed from the body after 5 seconds to return to normal size.
-    setTimeout(removeScale, 5000)
-})
+// Escuchador de eventos para el botón del Móvil
+if(downloadButton) {
+    downloadButton.addEventListener("click", handlePdfGeneration);
+}
